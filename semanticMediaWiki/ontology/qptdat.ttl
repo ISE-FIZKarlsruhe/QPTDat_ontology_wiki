@@ -1,0 +1,637 @@
+@prefix : <http://plasma-mds.org/qptdat#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix obda: <https://w3id.org/obda/vocabulary#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix qptdat: <http://plasma-mds.org/qptdat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@base <http://plasma-mds.org/qptdat> .
+
+<http://plasma-mds.org/qptdat> rdf:type owl:Ontology ;
+                                owl:versionIRI <http://plasma-mds.org/qptdat/v1.0> ;
+                                rdfs:label "QPTDat" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/dcam/domainIncludes
+<http://purl.org/dc/dcam/domainIncludes> rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/dcam/rangeIncludes
+<http://purl.org/dc/dcam/rangeIncludes> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#altLabel
+<http://www.w3.org/2004/02/skos/core#altLabel> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#changeNote
+<http://www.w3.org/2004/02/skos/core#changeNote> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#definition
+<http://www.w3.org/2004/02/skos/core#definition> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#editorialNote
+<http://www.w3.org/2004/02/skos/core#editorialNote> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#scopeNote
+<http://www.w3.org/2004/02/skos/core#scopeNote> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/prov#category
+<http://www.w3.org/ns/prov#category> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/prov#component
+<http://www.w3.org/ns/prov#component> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/prov#definition
+<http://www.w3.org/ns/prov#definition> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/prov#dm
+<http://www.w3.org/ns/prov#dm> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/ns/prov#n
+<http://www.w3.org/ns/prov#n> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://purl.org/dc/terms/Box
+dcterms:Box rdf:type rdfs:Datatype .
+
+
+###  http://purl.org/dc/terms/ISO3166
+dcterms:ISO3166 rdf:type rdfs:Datatype .
+
+
+###  http://purl.org/dc/terms/ISO639-2
+dcterms:ISO639-2 rdf:type rdfs:Datatype .
+
+
+###  http://purl.org/dc/terms/ISO639-3
+dcterms:ISO639-3 rdf:type rdfs:Datatype .
+
+
+###  http://purl.org/dc/terms/Period
+dcterms:Period rdf:type rdfs:Datatype .
+
+
+###  http://purl.org/dc/terms/Point
+dcterms:Point rdf:type rdfs:Datatype .
+
+
+###  http://purl.org/dc/terms/RFC1766
+dcterms:RFC1766 rdf:type rdfs:Datatype .
+
+
+###  http://purl.org/dc/terms/RFC3066
+dcterms:RFC3066 rdf:type rdfs:Datatype .
+
+
+###  http://purl.org/dc/terms/RFC4646
+dcterms:RFC4646 rdf:type rdfs:Datatype .
+
+
+###  http://purl.org/dc/terms/RFC5646
+dcterms:RFC5646 rdf:type rdfs:Datatype .
+
+
+###  http://purl.org/dc/terms/URI
+dcterms:URI rdf:type rdfs:Datatype .
+
+
+###  http://purl.org/dc/terms/W3CDTF
+dcterms:W3CDTF rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://plasma-mds.org/qptdat#actsOn
+qptdat:actsOn rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              rdfs:domain qptdat:Plasma ;
+              rdfs:range qptdat:Target .
+
+
+###  http://plasma-mds.org/qptdat#adjust
+qptdat:adjust rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              rdfs:domain qptdat:Setting ;
+              rdfs:range qptdat:Device .
+
+
+###  http://plasma-mds.org/qptdat#adjustedBy
+qptdat:adjustedBy rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf owl:topObjectProperty ;
+                  rdfs:domain qptdat:Device ;
+                  rdfs:range qptdat:Setting .
+
+
+###  http://plasma-mds.org/qptdat#consistsOf
+qptdat:consistsOf rdf:type owl:ObjectProperty ;
+                  rdfs:domain qptdat:Medium ;
+                  rdfs:range qptdat:Matter .
+
+
+###  http://plasma-mds.org/qptdat#contributor
+qptdat:contributor rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf dcterms:contributor ;
+                   rdfs:domain <http://www.w3.org/ns/dcat#Dataset> ;
+                   rdfs:range <http://www.w3.org/ns/prov#Agent> .
+
+
+###  http://plasma-mds.org/qptdat#describedBy
+qptdat:describedBy rdf:type owl:ObjectProperty ;
+                   owl:inverseOf qptdat:describes ;
+                   rdfs:domain qptdat:PlasmaExperiment ;
+                   rdfs:range <http://www.w3.org/ns/dcat#Dataset> .
+
+
+###  http://plasma-mds.org/qptdat#describes
+qptdat:describes rdf:type owl:ObjectProperty ;
+                 rdfs:domain <http://www.w3.org/ns/dcat#Dataset> ;
+                 rdfs:range qptdat:PlasmaExperiment .
+
+
+###  http://plasma-mds.org/qptdat#gatheredBy
+qptdat:gatheredBy rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf owl:topObjectProperty ;
+                  rdfs:domain qptdat:Resource ;
+                  rdfs:range qptdat:DiagnosticMethod .
+
+
+###  http://plasma-mds.org/qptdat#generatedBy
+qptdat:generatedBy rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain qptdat:Plasma ;
+                   rdfs:range qptdat:AdjustedSource .
+
+
+###  http://plasma-mds.org/qptdat#generatedIn
+qptdat:generatedIn rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain qptdat:Plasma ;
+                   rdfs:range qptdat:Medium .
+
+
+###  http://plasma-mds.org/qptdat#hasComponent
+qptdat:hasComponent rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://plasma-mds.org/qptdat#hasDiagnosticMethod
+qptdat:hasDiagnosticMethod rdf:type owl:ObjectProperty ;
+                           rdfs:subPropertyOf qptdat:hasComponent ;
+                           owl:inverseOf qptdat:isDiagnosticMethodOf ;
+                           rdfs:domain qptdat:PlasmaExperiment ;
+                           rdfs:range qptdat:DiagnosticMethod .
+
+
+###  http://plasma-mds.org/qptdat#hasMedium
+qptdat:hasMedium rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf qptdat:hasComponent ;
+                 owl:inverseOf qptdat:isMediumOf ;
+                 rdfs:domain qptdat:PlasmaExperiment ;
+                 rdfs:range qptdat:Medium .
+
+
+###  http://plasma-mds.org/qptdat#hasSource
+qptdat:hasSource rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf qptdat:hasComponent ;
+                 owl:inverseOf qptdat:isSourceOf ;
+                 rdfs:domain qptdat:PlasmaExperiment ;
+                 rdfs:range qptdat:AdjustedSource .
+
+
+###  http://plasma-mds.org/qptdat#hasTarget
+qptdat:hasTarget rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf qptdat:hasComponent ;
+                 owl:inverseOf qptdat:isTargetOf ;
+                 rdfs:domain qptdat:PlasmaExperiment ;
+                 rdfs:range qptdat:Target .
+
+
+###  http://plasma-mds.org/qptdat#homepage
+qptdat:homepage rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf <http://xmlns.com/foaf/spec/#term_homepage> ;
+                rdfs:domain <http://www.w3.org/ns/prov#Agent> .
+
+
+###  http://plasma-mds.org/qptdat#investigates
+qptdat:investigates rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdfs:domain qptdat:DiagnosticMethod ;
+                    rdfs:range [ rdf:type owl:Class ;
+                                 owl:unionOf ( qptdat:AdjustedSource
+                                               qptdat:Medium
+                                               qptdat:Target
+                                             )
+                               ] .
+
+
+###  http://plasma-mds.org/qptdat#involves
+qptdat:involves rdf:type owl:ObjectProperty ;
+                rdfs:domain qptdat:PlasmaExperiment ;
+                rdfs:range qptdat:Plasma .
+
+
+###  http://plasma-mds.org/qptdat#isDiagnosticMethodOf
+qptdat:isDiagnosticMethodOf rdf:type owl:ObjectProperty ;
+                            rdfs:subPropertyOf qptdat:partOf ;
+                            rdfs:domain qptdat:DiagnosticMethod ;
+                            rdfs:range qptdat:PlasmaExperiment .
+
+
+###  http://plasma-mds.org/qptdat#isMediumOf
+qptdat:isMediumOf rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf qptdat:partOf ;
+                  rdfs:domain qptdat:Medium ;
+                  rdfs:range qptdat:PlasmaExperiment .
+
+
+###  http://plasma-mds.org/qptdat#isReferencedBy
+qptdat:isReferencedBy rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf dcterms:isReferencedBy ;
+                      rdfs:domain <http://www.w3.org/ns/dcat#Dataset> ;
+                      rdfs:range <http://purl.org/spar/datacite/Identifier> .
+
+
+###  http://plasma-mds.org/qptdat#isSourceOf
+qptdat:isSourceOf rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf qptdat:partOf ;
+                  rdfs:domain qptdat:AdjustedSource ;
+                  rdfs:range qptdat:PlasmaExperiment .
+
+
+###  http://plasma-mds.org/qptdat#isTargetOf
+qptdat:isTargetOf rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf qptdat:partOf ;
+                  rdfs:domain qptdat:Target ;
+                  rdfs:range qptdat:PlasmaExperiment .
+
+
+###  http://plasma-mds.org/qptdat#license
+qptdat:license rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf dcterms:license ;
+               rdfs:domain <http://www.w3.org/ns/dcat#Dataset> ;
+               rdfs:range dcterms:LicenseDocument .
+
+
+###  http://plasma-mds.org/qptdat#partOf
+qptdat:partOf rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://plasma-mds.org/qptdat#size
+qptdat:size rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdfs:domain qptdat:Target ;
+            rdfs:range qptdat:Size .
+
+
+###  http://plasma-mds.org/qptdat#state
+qptdat:state rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:domain qptdat:Target ;
+             rdfs:range qptdat:StateOfMatter .
+
+
+###  http://plasma-mds.org/qptdat#surface
+qptdat:surface rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain qptdat:Target ;
+               rdfs:range qptdat:Surface .
+
+
+###  http://plasma-mds.org/qptdat#usesDevice
+qptdat:usesDevice rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf owl:topObjectProperty ;
+                  rdfs:domain qptdat:AdjustedDevice ;
+                  rdfs:range qptdat:Device .
+
+
+###  http://plasma-mds.org/qptdat#usesSetting
+qptdat:usesSetting rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain qptdat:AdjustedDevice ;
+                   rdfs:range qptdat:Setting .
+
+
+###  http://purl.org/dc/terms/contributor
+dcterms:contributor rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/dc/terms/isReferencedBy
+dcterms:isReferencedBy rdf:type owl:ObjectProperty .
+
+
+###  http://purl.org/dc/terms/license
+dcterms:license rdf:type owl:ObjectProperty .
+
+
+###  http://xmlns.com/foaf/spec/#term_homepage
+<http://xmlns.com/foaf/spec/#term_homepage> rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://plasma-mds.org/qptdat#created
+qptdat:created rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf dcterms:created ;
+               rdfs:domain <http://www.w3.org/ns/dcat#Dataset> ;
+               rdfs:range xsd:date .
+
+
+###  http://plasma-mds.org/qptdat#dataType
+qptdat:dataType rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdfs:domain qptdat:Resource ;
+                rdfs:range xsd:string .
+
+
+###  http://plasma-mds.org/qptdat#description
+qptdat:description rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf dcterms:description ;
+                   rdfs:domain <http://www.w3.org/ns/dcat#Dataset> ;
+                   rdfs:range rdfs:Literal .
+
+
+###  http://plasma-mds.org/qptdat#fileType
+qptdat:fileType rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdfs:domain qptdat:Resource ;
+                rdfs:range xsd:string .
+
+
+###  http://plasma-mds.org/qptdat#purity
+qptdat:purity rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain qptdat:Gas ;
+              rdfs:range xsd:integer .
+
+
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:DatatypeProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://plasma-mds.org/qptdat#AdjustedDevice
+qptdat:AdjustedDevice rdf:type owl:Class ;
+                      rdfs:subClassOf qptdat:Device .
+
+
+###  http://plasma-mds.org/qptdat#AdjustedSource
+qptdat:AdjustedSource rdf:type owl:Class ;
+                      rdfs:subClassOf qptdat:AdjustedDevice ;
+                      rdfs:label "Source"@en .
+
+
+###  http://plasma-mds.org/qptdat#Arc
+qptdat:Arc rdf:type owl:Class ;
+           rdfs:subClassOf qptdat:Plasma ;
+           rdfs:label "Arc"@en .
+
+
+###  http://plasma-mds.org/qptdat#CarrierGas
+qptdat:CarrierGas rdf:type owl:Class ;
+                  rdfs:subClassOf qptdat:Gas ;
+                  rdfs:label "CarrierGas"@en .
+
+
+###  http://plasma-mds.org/qptdat#Device
+qptdat:Device rdf:type owl:Class .
+
+
+###  http://plasma-mds.org/qptdat#DiagnosticMethod
+qptdat:DiagnosticMethod rdf:type owl:Class ;
+                        rdfs:label "Diagnostic Method"@en .
+
+
+###  http://plasma-mds.org/qptdat#ExperimentMethod
+qptdat:ExperimentMethod rdf:type owl:Class ;
+                        rdfs:subClassOf qptdat:DiagnosticMethod ;
+                        rdfs:label "Experiment Method"@en .
+
+
+###  http://plasma-mds.org/qptdat#Gas
+qptdat:Gas rdf:type owl:Class ;
+           rdfs:subClassOf qptdat:Matter ;
+           rdfs:label "Gas"@en .
+
+
+###  http://plasma-mds.org/qptdat#Liquid
+qptdat:Liquid rdf:type owl:Class ;
+              rdfs:subClassOf qptdat:Matter ;
+              rdfs:label "Liquid"@en .
+
+
+###  http://plasma-mds.org/qptdat#Matter
+qptdat:Matter rdf:type owl:Class ;
+              rdfs:label "Matter"@en .
+
+
+###  http://plasma-mds.org/qptdat#Medium
+qptdat:Medium rdf:type owl:Class ;
+              rdfs:label "Medium"@en .
+
+
+###  http://plasma-mds.org/qptdat#Microwave
+qptdat:Microwave rdf:type owl:Class ;
+                 rdfs:subClassOf qptdat:Plasma ;
+                 rdfs:label "Microwave"@en .
+
+
+###  http://plasma-mds.org/qptdat#ModellingMethod
+qptdat:ModellingMethod rdf:type owl:Class ;
+                       rdfs:subClassOf qptdat:DiagnosticMethod ;
+                       rdfs:label "Modelling Method"@en .
+
+
+###  http://plasma-mds.org/qptdat#Plasma
+qptdat:Plasma rdf:type owl:Class ;
+              rdfs:label "Plasma"@en .
+
+
+###  http://plasma-mds.org/qptdat#PlasmaExperiment
+qptdat:PlasmaExperiment rdf:type owl:Class ;
+                        rdfs:label "Plasma Experiment"@en ,
+                                   "Plasma Study"@en .
+
+
+###  http://plasma-mds.org/qptdat#Resource
+qptdat:Resource rdf:type owl:Class ;
+                rdfs:label "Resource"@en .
+
+
+###  http://plasma-mds.org/qptdat#Setting
+qptdat:Setting rdf:type owl:Class .
+
+
+###  http://plasma-mds.org/qptdat#ShieldingGas
+qptdat:ShieldingGas rdf:type owl:Class ;
+                    rdfs:subClassOf qptdat:Gas ;
+                    rdfs:label "Shielding Gas"@en .
+
+
+###  http://plasma-mds.org/qptdat#SimulationMethod
+qptdat:SimulationMethod rdf:type owl:Class ;
+                        rdfs:subClassOf qptdat:DiagnosticMethod ;
+                        rdfs:label "Simulation Method"@en .
+
+
+###  http://plasma-mds.org/qptdat#Size
+qptdat:Size rdf:type owl:Class ;
+            rdfs:label "Size"@en .
+
+
+###  http://plasma-mds.org/qptdat#StateOfMatter
+qptdat:StateOfMatter rdf:type owl:Class ;
+                     rdfs:label "State of Matter"@en .
+
+
+###  http://plasma-mds.org/qptdat#Surface
+qptdat:Surface rdf:type owl:Class ;
+               rdfs:label "Surface"@en .
+
+
+###  http://plasma-mds.org/qptdat#Target
+qptdat:Target rdf:type owl:Class ;
+              rdfs:label "Target"@en .
+
+
+###  http://purl.org/dc/terms/LicenseDocument
+dcterms:LicenseDocument rdf:type owl:Class .
+
+
+###  http://purl.org/spar/datacite/Identifier
+<http://purl.org/spar/datacite/Identifier> rdf:type owl:Class .
+
+
+###  http://www.w3.org/ns/dcat#Dataset
+<http://www.w3.org/ns/dcat#Dataset> rdf:type owl:Class ;
+                                    rdfs:comment "1つのエージェントによって公開またはキュレートされ、1つ以上の形式でアクセスまたはダウンロードできるデータの集合。"@ja ,
+                                                 "A collection of data, published or curated by a single source, and available for access or download in one or more representations."@en ,
+                                                 "En samling af data, udgivet eller udvalgt og arrangeret af en enkelt kilde og som er til råde for adgang til eller download af i en eller flere repræsentationer."@da ,
+                                                 "Kolekce dat poskytovaná či řízená jedním zdrojem, která je k dispozici pro přístup či stažení v jednom či více formátech."@cs ,
+                                                 "Raccolta di dati, pubblicati o curati da un'unica fonte, disponibili per l'accesso o il download in uno o più formati."@it ,
+                                                 "Una colección de datos, publicados o conservados por una única fuente, y disponibles para ser accedidos o descargados en uno o más formatos."@es ,
+                                                 "Une collection de données, publiée ou élaborée par une seule source, et disponible pour accès ou téléchargement dans un ou plusieurs formats."@fr ,
+                                                 "Μία συλλογή από δεδομένα, δημοσιευμένη ή επιμελημένη από μία και μόνο πηγή, διαθέσιμη δε προς πρόσβαση ή μεταφόρτωση σε μία ή περισσότερες μορφές."@el ,
+                                                 "قائمة بيانات منشورة أو مجموعة من قبل مصدر ما و متاح الوصول إليها أو تحميلها"@ar ;
+                                    rdfs:isDefinedBy <http://www.w3.org/TR/vocab-dcat/> ;
+                                    rdfs:label "Conjunto de datos"@es ,
+                                               "Dataset"@en ,
+                                               "Dataset"@it ,
+                                               "Datasæt"@da ,
+                                               "Datová sada"@cs ,
+                                               "Jeu de données"@fr ,
+                                               "Σύνολο Δεδομένων"@el ,
+                                               "قائمة بيانات"@ar ,
+                                               "データセット"@ja ;
+                                    <http://www.w3.org/2004/02/skos/core#altLabel> "Datasamling"@da ;
+                                    <http://www.w3.org/2004/02/skos/core#changeNote> "2018-02 - odstraněno tvrzení o podtřídě dctype:Dataset, jelikož rozsah dcat:Dataset zahrnuje několik dalších typů ze slovníku dctype."@cs ,
+                                                                                     "2018-02 - se eliminó el axioma de subclase con dctype:Dataset porque el alcance de dcat:Dataset incluye muchos otros tipos del vocabulario dctype."@es ,
+                                                                                     "2018-02 - sottoclasse di dctype:Dataset rimosso perché l'ambito di dcat:Dataset include diversi altri tipi dal vocabolario dctype."@it ,
+                                                                                     "2018-02 - subclass of dctype:Dataset removed because scope of dcat:Dataset includes several other types from the dctype vocabulary."@en ,
+                                                                                     "2018-02 - subklasse af dctype:Dataset fjernet da scope af dcat:Dataset omfatter flere forskellige typer fra dctype-vokabularet."@da ;
+                                    <http://www.w3.org/2004/02/skos/core#definition> "1つのエージェントによって公開またはキュレートされ、1つ以上の形式でアクセスまたはダウンロードできるデータの集合。"@ja ,
+                                                                                     "A collection of data, published or curated by a single source, and available for access or download in one or more represenations."@en ,
+                                                                                     "En samling a data, udgivet eller udvalgt og arrangeret af en enkelt kilde og som der er adgang til i en eller flere repræsentationer."@da ,
+                                                                                     "Kolekce dat poskytovaná či řízená jedním zdrojem, která je k dispozici pro přístup či stažení v jednom či více formátech."@cs ,
+                                                                                     "Raccolta di dati, pubblicati o curati da un'unica fonte, disponibili per l'accesso o il download in uno o più formati."@it ,
+                                                                                     "Una colección de datos, publicados o conservados por una única fuente, y disponibles para ser accedidos o descargados en uno o más formatos."@es ,
+                                                                                     "Une collection de données, publiée ou élaborée par une seule source, et disponible pour accès ou téléchargement dans un ou plusieurs formats."@fr ,
+                                                                                     "Μία συλλογή από δεδομένα, δημοσιευμένη ή επιμελημένη από μία και μόνο πηγή, διαθέσιμη δε προς πρόσβαση ή μεταφόρτωση σε μία ή περισσότερες μορφές."@el ,
+                                                                                     "قائمة بيانات منشورة أو مجموعة من قبل مصدر ما و متاح الوصول إليها أو تحميلها"@ar ;
+                                    <http://www.w3.org/2004/02/skos/core#editorialNote> "2020-03-16 A new scopenote added and need to be translated"@en ;
+                                    <http://www.w3.org/2004/02/skos/core#scopeNote> "Cette classe représente le jeu de données publié par le fournisseur de données. Dans les cas où une distinction est nécessaire entre le jeu de donénes et son entrée dans le catalogue, la classe registre de données peut être utilisée pour ce dernier."@fr ,
+                                                                                    "Denne klasse beskriver det konceptuelle datasæt. En eller flere repræsentationer kan være tilgængelige med forskellige skematiske opsætninger, formater eller serialiseringer."@da ,
+                                                                                    "Denne klasse repræsenterer det konkrete datasæt som det udgives af datasætleverandøren. I de tilfælde hvor det er nødvendigt at skelne mellem det konkrete datasæt og dets registrering i kataloget (fordi metadata såsom ændringsdato og vedligeholder er forskellige), så kan klassen katalogpost anvendes. "@da ,
+                                                                                    "Esta clase representa el conjunto de datos publicados. En los casos donde es necesario distinguir entre el conjunto de datos y su entrada en el catálogo de datos, se debe utilizar la clase 'registro del catálogo'."@es ,
+                                                                                    "Questa classe descrive il dataset dal punto di vista concettuale. Possono essere disponibili una o più rappresentazioni, con diversi layout e formati schematici o serializzazioni."@it ,
+                                                                                    "Questa classe rappresenta il dataset come pubblicato dall’editore. Nel caso in cui sia necessario operare  una distinzione fra i metadati originali del dataset e il record dei metadati ad esso associato nel catalogo (ad esempio, per distinguere la data di modifica del dataset da quella del dataset nel catalogo) si può impiegare la classe catalog record."@it ,
+                                                                                    "Tato třída reprezentuje datovou sadu tak, jak je publikována poskytovatelem dat. V případě potřeby rozlišení datové sady a jejího katalogizačního záznamu (jelikož metadata jako datum modifikace se mohou lišit) pro něj může být použita třída \"katalogizační záznam\"."@cs ,
+                                                                                    "The notion of dataset in DCAT is broad and inclusive, with the intention of accommodating resource types arising from all communities. Data comes in many forms including numbers, text, pixels, imagery, sound and other multi-media, and potentially other types, any of which might be collected into a dataset."@en ,
+                                                                                    "This class describes the conceptual dataset. One or more representations might be available, with differing schematic layouts and formats or serializations."@en ,
+                                                                                    "This class represents the actual dataset as published by the dataset provider. In cases where a distinction between the actual dataset and its entry in the catalog is necessary (because metadata such as modification date and maintainer might differ), the catalog record class can be used for the latter."@en ,
+                                                                                    "Η κλάση αυτή αναπαριστά το σύνολο δεδομένων αυτό καθ'εαυτό, όπως έχει δημοσιευθεί από τον εκδότη. Σε περιπτώσεις όπου είναι απαραίτητος ο διαχωρισμός μεταξύ του συνόλου δεδομένων και της καταγραφής αυτού στον κατάλογο (γιατί μεταδεδομένα όπως η ημερομηνία αλλαγής και ο συντηρητής μπορεί να διαφέρουν) η κλάση της καταγραφής καταλόγου μπορεί να χρησιμοποιηθεί για το τελευταίο."@el ,
+                                                                                    "このクラスは、データセットの公開者が公開する実際のデータセットを表わします。カタログ内の実際のデータセットとそのエントリーとの区別が必要な場合（修正日と維持者などのメタデータが異なるかもしれないので）は、後者にcatalog recordというクラスを使用できます。"@ja .
+
+
+###  http://www.w3.org/ns/prov#Agent
+<http://www.w3.org/ns/prov#Agent> rdf:type owl:Class ;
+                                  rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                                  rdfs:label "Agent" ;
+                                  <http://www.w3.org/ns/prov#category> "starting-point" ;
+                                  <http://www.w3.org/ns/prov#component> "agents-responsibility" ;
+                                  <http://www.w3.org/ns/prov#definition> "An agent is something that bears some form of responsibility for an activity taking place, for the existence of an entity, or for another agent's activity. "@en ;
+                                  <http://www.w3.org/ns/prov#dm> "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-agent"^^xsd:anyURI ;
+                                  <http://www.w3.org/ns/prov#n> "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-Agent"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#Organization
+<http://www.w3.org/ns/prov#Organization> rdf:type owl:Class ;
+                                         rdfs:subClassOf <http://www.w3.org/ns/prov#Agent> ;
+                                         rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                                         rdfs:label "Organization" ;
+                                         <http://www.w3.org/ns/prov#category> "expanded" ;
+                                         <http://www.w3.org/ns/prov#component> "agents-responsibility" ;
+                                         <http://www.w3.org/ns/prov#definition> "An organization is a social or legal institution such as a company, society, etc." ;
+                                         <http://www.w3.org/ns/prov#dm> "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-agent"^^xsd:anyURI ;
+                                         <http://www.w3.org/ns/prov#n> "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-types"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#Person
+<http://www.w3.org/ns/prov#Person> rdf:type owl:Class ;
+                                   rdfs:subClassOf <http://www.w3.org/ns/prov#Agent> ;
+                                   rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                                   rdfs:label "Person" ;
+                                   <http://www.w3.org/ns/prov#category> "expanded" ;
+                                   <http://www.w3.org/ns/prov#component> "agents-responsibility" ;
+                                   <http://www.w3.org/ns/prov#definition> "Person agents are people."@en ;
+                                   <http://www.w3.org/ns/prov#dm> "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-agent"^^xsd:anyURI ;
+                                   <http://www.w3.org/ns/prov#n> "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-types"^^xsd:anyURI .
+
+
+###  http://www.w3.org/ns/prov#SoftwareAgent
+<http://www.w3.org/ns/prov#SoftwareAgent> rdf:type owl:Class ;
+                                          rdfs:subClassOf <http://www.w3.org/ns/prov#Agent> ;
+                                          rdfs:isDefinedBy <http://www.w3.org/ns/prov-o#> ;
+                                          rdfs:label "SoftwareAgent" ;
+                                          <http://www.w3.org/ns/prov#category> "expanded" ;
+                                          <http://www.w3.org/ns/prov#component> "agents-responsibility" ;
+                                          <http://www.w3.org/ns/prov#definition> "A software agent is running software."@en ;
+                                          <http://www.w3.org/ns/prov#dm> "http://www.w3.org/TR/2013/REC-prov-dm-20130430/#term-agent"^^xsd:anyURI ;
+                                          <http://www.w3.org/ns/prov#n> "http://www.w3.org/TR/2013/REC-prov-n-20130430/#expression-types"^^xsd:anyURI .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

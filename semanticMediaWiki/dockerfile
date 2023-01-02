@@ -1,0 +1,10 @@
+FROM mediawiki:1.37.1
+
+RUN apt-get update && apt-get install -y vim unzip libzip-dev && docker-php-ext-install zip 
+RUN curl -sS https://getcomposer.org/download/2.1.14/composer.phar > composer.phar | php && mv composer.phar /usr/local/bin/composer 
+RUN chmod 755 /usr/local/bin/composer
+
+COPY composer.local.json .
+RUN composer update --no-dev
+RUN composer update --no-dev
+#RUN maintenance/update.php

@@ -1,0 +1,10 @@
+FROM python:3.8
+
+RUN pip install --upgrade setuptools
+WORKDIR /usr/src/app
+COPY . /usr/src/app
+RUN python setup.py install
+
+ENTRYPOINT bash
+#ENTRYPOINT ontology2smw -w -o ./data/data.ttl -f ttl 
+
