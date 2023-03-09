@@ -1,0 +1,5 @@
+# Python 3.10
+rdflib==6.2.0
+pylode==3.0.4
+pywikibot==8.0.0
+lxml==4.9.2

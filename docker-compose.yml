@@ -1,0 +1,58 @@
+version: "3.8"
+services:
+  mediawiki:
+    build: 
+      context: ./semanticMediaWiki
+    restart: unless-stopped
+    ports:
+      - "8888:80"
+    depends_on:
+      - database
+      - triplestore
+    volumes:
+      - smw:/var/www/data
+      - smw-images:/var/www/html/images
+      - smw-sitemap:/var/www/html/sitemap 
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php:ro
+    networks:
+      default:
+      wiki_network:
+  database:
+    image: mariadb
+    restart: unless-stopped
+    volumes:
+      - smw-db:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    networks:
+      default:
+  triplestore:
+    image: tenforce/virtuoso
+    restart: unless-stopped
+    ports:
+      - 8890
+      - 1111
+    volumes:
+      - ./data:/data
+    environment:
+      - DBA_PASSWORD=${DBA_PASSWORD}
+      - SPARQL_UPDATE=true
+      - DEFAULT_GRAPH=${DEFAULT_GRAPH}
+    networks:
+      default:
+
+volumes:
+    smw:
+    smw-images:
+    smw-sitemap:
+    smw-db:
+
+networks:
+  default:
+    name: qptdat_internal_wiki
+  wiki_network:
+    name: qptdat_wiki
+    external: true

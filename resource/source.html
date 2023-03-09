@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QTPDat Source Ontology</title>
+    <style>
+        #pylode {
+            position: fixed;
+            top: 130px;
+            left: -80px;
+            font-size: small;
+            transform: rotate(-90deg);
+            color: grey;
+        }
+        #pylode a {
+            font-size: 2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #005A9C;
+        }
+        #pylode a:hover {
+            color: #333;
+        }
+        #pylode #p {
+            color: #329545;
+        }
+        #pylode #y {
+            color: #f9cb33;
+        }
+        #pylode #version {
+            font-size: 1.0em;
+        }
+
+        .cardinality {
+            font-style: italic;
+            color: #aa00aa;
+        }
+
+        dl {
+            /*border: 1px solid navy;*/
+            /*padding:5px;*/
+        }
+
+        dt {
+            font-weight: bold;
+            padding: 0;
+        }
+
+        dd {
+            margin-bottom: 10px;
+            padding-top: 7px;
+        }
+
+        #metadata ul,
+        #classes ul {
+            list-style-type: none;
+        }
+
+        #metadata ul li,
+        #classes ul li {
+            margin-left: -40px;
+        }
+
+        ul.hlist {
+            list-style-type: none;
+            border: 1px solid navy;
+            padding:5px;
+            background-color: #F4FFFF;
+        }
+
+        ul.hierarchy {
+            border: 1px solid navy;
+            padding: 5px 25px 5px 25px;
+            background-color: #F4FFFF;
+        }
+
+
+        ul.hlist li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .entity {
+            border: 1px solid navy;
+            margin:5px 0 5px 0;
+            padding: 5px;
+        }
+
+        .entity th {
+            width: 150px;
+            vertical-align: top;
+        }
+
+        .entity th,
+        .entity td {
+            padding-bottom: 20px;
+        }
+
+        .entity table th {
+            text-align: left;
+        }
+
+        section#overview img {
+            max-width: 1000px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-align: left
+        }
+        h1, h2, h3 {
+            color: #005A9C; background: white
+        }
+        h1 {
+            font: 170% sans-serif;
+            line-height: 110%;
+        }
+        h2 {
+            font: 140% sans-serif;
+            margin-top:40px;
+        }
+        h3 {
+            font: 120% sans-serif;
+            margin-top: 20px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid navy;
+        }
+        h4 { font: bold 100% sans-serif }
+        h5 { font: italic 100% sans-serif }
+        h6 { font: small-caps 100% sans-serif }
+
+        body {
+            padding: 2em 70px 2em 70px;
+            margin: 0;
+            font-family: sans-serif;
+            color: black;
+            background: white;
+            background-position: top left;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            text-align: justify;
+        }
+
+        section {
+            max-width: 1500px;
+        }
+
+        .figure {
+            margin-bottom: 20px;
+        }
+
+        :link { color: #00C; background: transparent }
+        :visited { color: #609; background: transparent }
+        a:active { color: #C00; background: transparent }
+
+        .sup-c,
+        .sup-op,
+        .sup-fp,
+        .sup-dp,
+        .sup-ap,
+        .sup-p,
+        .sup-ni,
+        .sup-con,
+        .sup-col {
+            cursor:help;
+        }
+
+        .sup-c {
+            color:orange;
+        }
+
+        .sup-op {
+            color:navy;
+        }
+
+        .sup-fp {
+            color:lightskyblue;
+        }
+
+        .sup-dp {
+            color:green;
+        }
+
+        .sup-ap {
+            color:darkred;
+        }
+
+        .sup-p {
+            color:black;
+        }
+
+        .sup-ni {
+            color:brown;
+        }
+
+        .sup-con {
+            color:orange;
+        }
+
+        .sup-col {
+            color:darkred;
+        }
+
+        sup {
+            margin-left: -3px;
+        }
+        code {
+            font-size: large;
+            color: darkred;
+        }
+
+        /* less prominent links for properties */
+        .proplink {
+            color: #336;
+            text-decoration: none;
+        }
+
+#toc {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px;
+    border: solid 1px navy;
+    font-size: small;
+    width: 180px;
+}
+#toc h3 {
+    margin-top: 5px;
+}
+
+#toc ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#toc .first > li {
+    margin-top: 5px;
+}
+
+#toc .second,
+#toc .third {
+    padding-left: 10px;
+}
+
+#content {
+    width: calc(100% - 150px);
+}
+
+.hover_property {
+    cursor: help;
+    text-decoration: none;
+    border-bottom: dashed 1px;
+}
+
+.setclass {
+    list-style-type: none;
+}
+
+code{
+    word-wrap: break-word;
+  }
+  table {
+    table-layout: fixed;
+    width: 100%;
+  }
+  td {
+    word-wrap: break-word;
+  }
+	</style>
+    <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABhklEQVQ4jbWPzStEURjG3yQLirlGKUnKFO45Z+SjmXvnnmthQcpCoVhYmD/AwmJiI3OvZuZc2U3UlKU0/gAslMw9JgvhHxAr2fko7r0jHSsl+TgbTz2Lt5731/MASEiJW9ONml2QyX6rsGalmnT74v8BDf12hxJfpV8d1uwNKUBYszabdFv84L8B9X0rESVmmUup2fme0cVhJWaZHw4NWL1SewEAfDe6H3Dy6Ll456WEJsRZS630MwCAOI20ei5OBpxse5zcBZw8eS4uPpfIuDiCainIg9umBCU0GZzgLZ9Hn31OgoATL+CkLDGB5H1OKj4nFd/FBxUXJ0UZNb4edw/6nLyJXaj5FeCVyPLNIVmYK8TG1IwWb16L1gEACAFV90ftoT8bdOX0EeyY99gxBXZMgRz6qGb1KantAACI0UvE6F5XJqEjpsdURouI0Vt5gGOUkUNnPu7ObGIIMfNaGqDmjDRi9FZldF1lRgYzeqUyeoiY4ag5Iy3RgOYRM8+/M2bG8efsO4hGrpmJseyMAAAAAElFTkSuQmCC" rel="icon" sizes="16x16" type="image/png">
+    <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC40lEQVRYhe2UT0hUQRzHp6Iss1B3VZKIDbbdfW9mnoi4f3zzjkJQeOgS0SEIb1EWBGGlLLu460zQPQM1unUIIjA6rfpm6ZAhHjoIRVQUFUlEbG+euTsdXG1d3VL3bVD4g+9h+L35fT/8fvN7ADgY9aHY5fpIvK82HO9ysu66wxWOzbkjcekKx0a2ALYA/n2AGi3a6ArFezcidziecQygNhhrcUficjP6PwBqtGijKxy/thnVBePHywYoDsFhl53GV8SEcsTx4usCMLUewTVpc23BNvEzm6Neyf1+KcG2vwqwUjgrOJq2JmHftwmkVBRGTvncFodnbI7vChO/FRznCmHsNM7aHM9Yk7Df5iqsLMw9sMNOK2g+jS4IEz0UJv4iuJZb2RltWnB4UZqH6ioGAgAAGe5vtiZhtzDx7OoRadLmeM7m6IRjhnLMW2Vx1bA5GhAmnhIcz6/xNj4Ujsky8UspwfayjDPjsF2Y6L7N8Vzx/BfP+KPg6LbgSqd8DnfJW2CnbaLhfH5ephpqygJYvQU4Z3P82TLRsDDhUTnmrSq+Y3N0Mg+Xldy/zwEAnLMWZ3pHpNExmfLs/t0dOdVcbT0JeKxUwFP2VljjqiE47Jp53LTXNxhsUZjerTByXWX6VZWRs/4bIQ2ACv+UAomgDzLCISNZxAxZKMhIDjLy1JfsaK+I+eGBUBNk5E2x8RogX/PdcDZUqieWTSh5D6nOVKqfhoycUmlHFFIyu5RXqf7AcQDISCpv/tqbMBqK883RtmpISRoxQyJKPgGn3wNk5NEigDFa6hslqV/Kj+FdBQD0bshIDlKSLlVcoWQo36UhR80BAMB73lulMn0EMpJTqD6qJiOt3mho/8GbkT2BZNgDB/V+RI0fkOrT3kRIVQbaDizJm2hdNbINBxwk5xAj3yEjuV9rZ1iIkgxixkLBA83mz8uCjLwoGwAx0vOnFSy5mtR4VTaAQvVORMnwZgSpzkrV/QmdE2tKe46+MQAAAABJRU5ErkJggg==" rel="icon" sizes="32x32" type="image/png">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <script id="schema.org" type="application/ld+json">
+[
+  {
+    "@id": "http://qptdat.plasma-mds.org/source_ontology",
+    "@type": [
+      "https://schema.org/DefinedTermSet"
+    ],
+    "https://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "QTPDat Source Ontology"
+      }
+    ]
+  }
+]
+	</script>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section" id="metadata">
+        <h1>QTPDat Source Ontology</h1>
+        <h2>Metadata</h2>
+        <dl>
+          <div>
+            <dt>
+              <strong>IRI</strong>
+            </dt>
+            <dd>
+              <code>http://qptdat.plasma-mds.org/source_ontology</code>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a class="hover_property" href="http://purl.org/dc/terms/title" title="A name given to the resource. Defined in DCMI Metadata Terms">Title</a>
+            </dt>
+            <dd><p>QTPDat Source Ontology</p></dd>
+          </div>
+          <div>
+            <dt>
+              <a class="hover_property" href="http://www.w3.org/2002/07/owl#versionIRI" title="The property that identifies the version IRI of an ontology. Defined in The OWL 2 Schema vocabulary (OWL 2)">Version Iri</a>
+            </dt>
+            <dd>
+              <a href="#v1.0">v1.0</a>
+            </dd>
+          </div>
+        </dl>
+      </div>
+      <div class="section" id="classes">
+        <h2>Classes</h2>
+        <div class="property entity" id="ApplicationField">
+          <h3>Application Field
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/ontology/ApplicationField</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/inRangeOf" title="Inverse of rdfs:range. Defined in Ontology Documentation Profile">In Range Of</a>
+              </th>
+              <td>
+                <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="ArgonMixture">
+          <h3>Argon Mixture
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/ArgonMixture</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <a href="http://qptdat.plasma-mds.org/ontology/Medium">qpt:Medium</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="AURA-WAVE(Sairem)">
+          <h3>AURA-WAVE (Sairem)
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/aura_wave_sairem</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>AURA-WAVE is an Electron Cyclotron Resonance (ECR) coaxial plasma source. It has been designed to be self-adapted once the plasma ignited. A magnetic field combined to the electromagnetic wave allows the creation of plasma at low pressure due to Electron Cyclotron Resonance. AURA-WAVE microwave plasma source has been designed to sustain microwave plasma over several decades of pressure, i.e. from 10⁻⁴ mbar to a few 10⁻² mbar and from a few watts depending on the gas.</p>
+<p>Equally, the coaxial plasma source was designed to avoid inside power-losses and has proved to be matched, i.e. no reflected power with no additional impedance matching system over 2 to 3 pressure decades, depending on the plasma gas. Plasma density up to a few 10¹¹ cm⁻³ could be easily obtained in multisource configuration in different gases like argon, oxygen, nitrogen. When combined with SAIREM solid state microwave generator, it is possible to control the power transmitted to the plasma Watt by Watt. Low mismatching that may appear in the operating conditions can be balanced due to the variable frequency of the solid-state generator and thus permits to extend the operating condition range of AURA-WAVE.</p>
+<p>AURA-WAVE is designed to be used equally in R&amp;D laboratories and industry for a very large range of applications. It is ideal for working in the low-pressure range i.e. with high energy particles.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="http://qptdat.plasma-mds.org/ontology/Source">qpt:Source</a>
+                  </li>
+                  <li><span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span></li>
+                  <li><span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span></li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="BiofilmJet">
+          <h3>Biofilm Jet
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/biofilm_jet</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>The Biofilm Jet is a plasma jet used for the removal of bacterial biofilms. The system is still in an experimental stage of development, but its efficacy has already been investigated and compared to other devices.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="http://qptdat.plasma-mds.org/ontology/PlasmaJet">qpt:PlasmaJet</a>
+                  </li>
+                  <li><span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span></li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="Hairlineplasmajet">
+          <h3>Hairline plasma jet
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/hairline_plasma_jet_hairlineplasma</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>The hairline plasma jet (hairlINePlasma) is a cold atmospheric pressure plasma source mainly for biological and medical applications. hairlINePlasma uses the physical effect of negative dc corona discharges and produces a nanosecond self-pulsed microplasma with a very thin plasma filament. The Plasma filament has a diameter of about 30 µm and a length of up to 3 cm. Due to this geometrical features, hairlINePlasma is particularly suitable for the treatment of microscopic cavities and the localized functionalization of conductive surfaces. The low plasma temperature allows the treatment of human skin without any heating or painful irritation.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="http://qptdat.plasma-mds.org/ontology/PlasmaJet">qpt:PlasmaJet</a>
+                  </li>
+                  <li><span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span></li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/restriction" title="Convenience property for things that subclass owl:Restriction. Defined in Ontology Documentation Profile">Restriction</a>
+              </th>
+              <td>
+                <span>
+                  <span>
+                    <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>value<br>
+                  </span>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="HelixJet">
+          <h3>HelixJet
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/helixjet</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>The HelixJet is a capacitively coupled radio-frequency (RF) plasma source operating at atmospheric pressure. The RF power is applied to two double helix electrodes. The electrodes are placed outside a quartz tube fed by the working gas. The HelixJet has unique features highly relevant for practical applications. The innovative double helix electrode design enables extremely stable and homogeneous plasma conditions at low gas flow rates. This plays a crucial role for the quality and reproducibility of several applications, e.g. PECVD of SiO₂ with a large footprint diameter or plasma microprinting of polymeric profiles (e.g. polyamide).</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="http://qptdat.plasma-mds.org/ontology/PlasmaJet">qpt:PlasmaJet</a>
+                  </li>
+                  <li><span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>only<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>only<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>only<br>
+  </span>
+</span></li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/restriction" title="Convenience property for things that subclass owl:Restriction. Defined in Ontology Documentation Profile">Restriction</a>
+              </th>
+              <td>
+                <span>
+                  <span>
+                    <span>
+                      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+                      <sup class="sup-op" title="OWL Object Property">op</sup>
+                    </span>value<br>
+                  </span>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="IonWindDBD">
+          <h3>Ion Wind DBD
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/ion_wind_dbd</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>The Ion Wind DBD uses a flat plasma electrode to create a surface dielectric barrier discharge (DBD) in the room air flowing over it. An additional “extraction” electrode is arranged in parallel to form a rectangular ventilation duct. The extraction electrode is charged, so that an additional unipolar electric field through the ventilation duct is created. This drags the ions of one polarity (either positive or negative) generated by the surface DBD in the direction of the extraction electrode. These accelerated ions collide with neutral molecules and particles to form an “ion wind”. In this way, the Ion Wind DBD can remove particles, aerosols or microorganisms from an air stream (similar to an electro filter). Besides that, reactive chemical species generated by the surface DBD can more effectively enter the air volume above thereby enhancing the plasma chemical effectivity.</p>
+<p>The Ion Wind DBD has proven decontamination, disinfection and odor reduction capabilities in high volumetric flow air streams. Usually, an active carbon filter placed downstream to the plasma source traps chemical pollutants, which get further degraded by plasma generated species. The filter also removes the unreacted ozone.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="http://qptdat.plasma-mds.org/ontology/DBD">qpt:DBD</a>
+                  </li>
+                  <li><span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span></li>
+                  <li><span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span></li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="Plasmaasacross-sectionaltechnologyinmanyindustrybranches,butalsoinresearchlaboratories,isanindispensabletoolinsurfacetreatment.Plasmatechnologyisusedeverywherewherequality,productivity,environmentalsustainability,precisionandflexibilityisimportant.Surfacesarecleaned,activatedanddecontaminatedatatmosphericpressurewiththehandykINPenIND.Thedeviceisparticularlyusedforsurfacetreatmentoftemperature-sensitivematerialsas,forinstance,plastics.Inaddition,kINPenINDprovidesyouaneasyaccesstogeometricchallengingsurfacessuchasnarrowclefts,capillariesorsubtlestbores.ThekINPenINDbasemodelisargon-powered.Theadmixtureofreducingoroxidizinggasescanbedoneuptothepercentagerange.Furthermore,thedeviceisconvertiblethroughthesimplechangeofitselectrodeheadtooperatewithmoleculargaseslikeairornitrogen.
+
+MoreinformationisprovidedbyneoplascontrolGmbH.">
+          <h3>Plasma as a cross-sectional technology in many industry branches, but also in research laboratories, is an indispensable tool in surface treatment. Plasma technology is used everywhere where quality, productivity, environmental sustainability, precision and flexibility is important. Surfaces are cleaned, activated and decontaminated at atmospheric pressure with the handy kINPen® IND. The device is particularly used for surface treatment of temperature-sensitive materials as, for instance, plastics. In addition, kINPen® IND provides you an easy access to geometric challenging surfaces such as narrow clefts, capillaries or subtlest bores. The kINPen® IND base model is argon-powered. The admixture of reducing or oxidizing gases can be done up to the percentage range. Furthermore, the device is convertible through the simple change of its electrode head to operate with molecular gases like air or nitrogen.
+
+More information is provided by neoplas control GmbH.kINPen® IND
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/kinpen_ind</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="http://qptdat.plasma-mds.org/ontology/PlasmaJet">qpt:PlasmaJet</a>
+                  </li>
+                  <li><span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>only<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>value<br>
+  </span>
+</span></li>
+                  <li><span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span></li>
+                  <li><span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span></li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="MillerAuto-Axcess450">
+          <h3>Miller Auto-Axcess™ 450
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/miller_auto_axcess_450</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>This plasma source is a commercial welding power source produced by Miller Electric Manufacturing Co., Appleton / USA. This welding system is precise, digitally controlled and software-driven. Several different wire feeding and operator interface options are available and configurable to desired application. The welding system allows a simple method that controls arc length for pulse processes and wetting action and allows changing weld programs to take advantage of up to eight programs of Multi-MIG welding process capabilities. Through changing shielding gas and associated program, the power source can work at different welding process, eg. MIG welding and MAG welding.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="http://qptdat.plasma-mds.org/ontology/Source">qpt:Source</a>
+                  </li>
+                  <li><span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span></li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/restriction" title="Convenience property for things that subclass owl:Restriction. Defined in Ontology Documentation Profile">Restriction</a>
+              </th>
+              <td>
+                <span>
+                  <span>
+                    <span>
+                      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+                      <sup class="sup-op" title="OWL Object Property">op</sup>
+                    </span>value<br>
+                  </span>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="MiniMIP">
+          <h3>MiniMIP
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/minimip</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>Due to its high degree of flexibility, the microwave plasma source MiniMIP is suitable for various different applications and experiments. The plasma can be ignited in both pure argon and pure helium, and furthermore, an admixture of molecular gases to can be used to provide an optimal matching of the process chemistry to the requirements of the specific application. Moreover, the wide operating range with regards to gas flow and microwave power along with the inherent high plasma temperature are essential prerequisites for various applications in decontamination, ultra-fine cleaning and activation of surfaces as well as real-time sample preparation speciation analysis approaches. These properties make the MiniMIP plasma source a powerful tool in production and analytic application fields of industry and research.</p>
+<p>More information is provided by neoplas control GmbH.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <a href="http://qptdat.plasma-mds.org/ontology/Source">qpt:Source</a>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/restriction" title="Convenience property for things that subclass owl:Restriction. Defined in Ontology Documentation Profile">Restriction</a>
+              </th>
+              <td>
+                <span>
+                  <span>
+                    <span>
+                      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+                      <sup class="sup-op" title="OWL Object Property">op</sup>
+                    </span>value<br>
+                  </span>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="neoplasMixture">
+          <h3>neoplas mixture
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/neoplasMixture</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <a href="http://qptdat.plasma-mds.org/ontology/Medium">qpt:Medium</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="Non-thermalatmosphericpressureplasmajet">
+          <h3>Non-thermal atmospheric pressure plasma jet
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/non_thermal_atmospheric_pressure_plasma_jet_ntappj</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>The non-thermal atmospheric pressure plasma jet (ntAPPJ) is composed of a quartz capillary with an inner diameter of 4 mm and an outer diameter of 6 mm. The plasma jet operates at a high frequency of 27.12 MHz in pure noble gases (helium, neon, argon, krypton) at flow rates between 0.1 and 2 slm. Small molecular gas admixtures or organic vapors can be added to the carrier gas. Two outer ring electrodes (width 5 mm, distance 5 mm) are adjusted concentrically with the capillary axis. Filaments in different configurations are generated in the active plasma region between both electrodes. The applied power ranges from 4 to 20 W. An inner capillary can be used to inject a precursor into the effluent.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <a href="http://qptdat.plasma-mds.org/ontology/PlasmaJet">qpt:PlasmaJet</a>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/restriction" title="Convenience property for things that subclass owl:Restriction. Defined in Ontology Documentation Profile">Restriction</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <span>
+                      <span>
+                        <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>only<br>
+                      </span>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <span>
+                        <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>only<br>
+                      </span>
+                    </span>
+                  </li>
+                  <li>
+                    <span>
+                      <span>
+                        <span>
+                          <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+                          <sup class="sup-op" title="OWL Object Property">op</sup>
+                        </span>value<br>
+                      </span>
+                    </span>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="PlasmaskopJet">
+          <h3>Plasmaskop Jet
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/plasmaskop_jet</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>The Plasmaskop Jet has originally been designed to be inserted into the working channel of a conventional endoscope. It has a tube-like character, is flexible, very thin and generates a biologically active jet plasma at the gas outlet. The device consists of an inner plastic tube, a ceramic nozzle, an outer plastic tube and a metal wire. The inner plastic tube is plugged upon the thin end of the ceramic nozzle. In order to provide high voltage at the end of the tube and at the same time maintain tube flexibility the metal wire is coiled around the inner tube. The outer plastic tube is placed coaxially over the inner tube. Thus, two gas channels are created. Through the inner tube helium or neon feed gas is provided with moderate flow rates of up to 300 sccm. The resulting gap between the inner and the outer tube is used to bring a second gas (CO₂) to the gas nozzle that acts as shielding gas. Due to the use of feed and shielding gas a stable plasma jet is generated even in hollow bodies. The original development was funded by the German Federal Ministry of Education and Research (BMBF) under the grant numbers: 13GW0052C and 03Z22DN12.</p>
+<p>Due to the small dimensions, the high flexibility and the capability to work in cavities and hollow bodies, the system has subsequently been adapted to further areas of application, such as the inactivation of viruses in the upper respiratory tract.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <a href="http://qptdat.plasma-mds.org/ontology/PlasmaJet">qpt:PlasmaJet</a>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="https://w3id.org/profile/ontdoc/restriction" title="Convenience property for things that subclass owl:Restriction. Defined in Ontology Documentation Profile">Restriction</a>
+              </th>
+              <td>
+                <span>
+                  <span>
+                    <span>
+                      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+                      <sup class="sup-op" title="OWL Object Property">op</sup>
+                    </span>value<br>
+                  </span>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="property entity" id="Venturi-DBD">
+          <h3>Venturi-DBD
+            <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/source_ontology/venturi_dbd_vdbd</code>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://purl.org/dc/terms/description" title="An account of the resource. Defined in DCMI Metadata Terms">Description</a>
+              </th>
+              <td><p>The gas pressure is an effective parameter to control plasma-chemical reactions, but its adjustment often requires substantial effort. In the Venturi-DBD (VDBD), the pressure can be set to any value between 100 mbar and 1000 mbar reliably and reproducibly. Using a Venturi pump for vacuum generation ensures that the system is affordable and almost maintenance-free. With air as process gas, the output gas composition can seamlessly be adjusted from a strongly ozone-dominated regime to a nitrogen oxides-only-regime including nitric oxide. Moreover, an extension to a Venturi-Vapor-DBD (VVDBD) allows treating humidified process gases for an even greater plasma-chemical flexibility.</p>
+<p>The system is available in different implementations adapted to the requirements of a variety of laboratory applications and experiments. It has been investigated in DFG research project 368502453.</p></td>
+            </tr>
+            <tr>
+              <th>
+                <a class="hover_property" href="http://www.w3.org/2000/01/rdf-schema#subClassOf" title="The subject is a subclass of a class. Defined in The RDF Schema vocabulary (RDFS)">Sub Class Of</a>
+              </th>
+              <td>
+                <ul>
+                  <li>
+                    <a href="http://qptdat.plasma-mds.org/ontology/DBD">qpt:DBD</a>
+                  </li>
+                  <li><span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+  </span>
+</span></li>
+                  <li><span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span> <span class="cardinality">and</span> <span>
+  <span>
+    <span>
+      <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+      <sup class="sup-op" title="OWL Object Property">op</sup>
+    </span>value<br>
+  </span>
+</span></li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>only<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>only<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>only<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>only<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/configuredBy">qpt:configuredBy</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <a href="http://qptdat.plasma-mds.org/ontology/hasApplicationField">qpt:hasApplicationField</a>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <span>
+        <span>
+          <span>
+            <a href="http://qptdat.plasma-mds.org/ontology/hasTopic">qpt:hasTopic</a>
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </span>value<br>
+        </span>
+      </span>
+      <div class="section" id="objectproperties">
+        <h2>Object Properties</h2>
+        <div class="property entity" id="hasTopic">
+          <h3>has topic
+            <sup class="sup-op" title="OWL Object Property">op</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://qptdat.plasma-mds.org/ontology/hasTopic</code>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="section" id="annotationproperties">
+        <h2>Annotation Properties</h2>
+        <div class="property entity" id="editorialNote">
+          <h3>editorial note
+            <sup class="sup-ap" title="OWL Annotation Property">ap</sup>
+          </h3>
+          <table>
+            <tr>
+              <th>IRI</th>
+              <td>
+                <code>http://www.w3.org/ns/prov#editorialNote</code>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="namespaces">
+        <h2>Namespaces</h2>
+        <dl>
+          <dt id=":">:</dt>
+          <dd>
+            <code>http://qptdat.plasma-mds.org/source_ontology/</code>
+          </dd>
+          <dt id="ns1">ns1</dt>
+          <dd>
+            <code>http://qptdat.plasma-mds.org/</code>
+          </dd>
+          <dt id="owl">owl</dt>
+          <dd>
+            <code>http://www.w3.org/2002/07/owl#</code>
+          </dd>
+          <dt id="qpt">qpt</dt>
+          <dd>
+            <code>http://qptdat.plasma-mds.org/ontology/</code>
+          </dd>
+          <dt id="rdf">rdf</dt>
+          <dd>
+            <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>
+          </dd>
+          <dt id="rdfs">rdfs</dt>
+          <dd>
+            <code>http://www.w3.org/2000/01/rdf-schema#</code>
+          </dd>
+          <dt id="xsd">xsd</dt>
+          <dd>
+            <code>http://www.w3.org/2001/XMLSchema#</code>
+          </dd>
+        </dl>
+      </div>
+      <div id="legend">
+        <h2>Legend</h2>
+        <table class="entity">
+          <tr>
+            <td>
+              <sup class="sup-c" title="OWL/RDFS Class">c</sup>
+            </td>
+            <td>Classes</td>
+          </tr>
+          <tr>
+            <td>
+              <sup class="sup-op" title="OWL Object Property">op</sup>
+            </td>
+            <td>Object Properties</td>
+          </tr>
+          <tr>
+            <td>
+              <sup class="sup-ap" title="OWL Annotation Property">ap</sup>
+            </td>
+            <td>Annotation Properties</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div id="pylode">
+      <p>made by 
+        <a href="https://github.com/rdflib/pyLODE">
+          <span id="p">p</span>
+          <span id="y">y</span>
+          <span>LODE</span>
+        </a>
+        <a href="https://github.com/rdflib/pyLODE/release/3.0.4" id="version">3.0.4</a>
+      </p>
+    </div>
+    <div id="toc">
+      <h3>Table of Contents</h3>
+      <ul class="first">
+        <li>
+          <h4>
+            <a href="#metadata">Metadata</a>
+          </h4>
+        </li>
+        <li>
+          <h4>
+            <a href="#classes">Classes</a>
+          </h4>
+          <ul class="second">
+            <li>
+              <a href="#ApplicationField">Application Field</a>
+            </li>
+            <li>
+              <a href="#ArgonMixture">Argon Mixture</a>
+            </li>
+            <li>
+              <a href="#AURA-WAVE(Sairem)">AURA-WAVE (Sairem)</a>
+            </li>
+            <li>
+              <a href="#BiofilmJet">Biofilm Jet</a>
+            </li>
+            <li>
+              <a href="#Hairlineplasmajet">Hairline plasma jet</a>
+            </li>
+            <li>
+              <a href="#HelixJet">HelixJet</a>
+            </li>
+            <li>
+              <a href="#IonWindDBD">Ion Wind DBD</a>
+            </li>
+            <li>
+              <a href="#Plasmaasacross-sectionaltechnologyinmanyindustrybranches,butalsoinresearchlaboratories,isanindispensabletoolinsurfacetreatment.Plasmatechnologyisusedeverywherewherequality,productivity,environmentalsustainability,precisionandflexibilityisimportant.Surfacesarecleaned,activatedanddecontaminatedatatmosphericpressurewiththehandykINPenIND.Thedeviceisparticularlyusedforsurfacetreatmentoftemperature-sensitivematerialsas,forinstance,plastics.Inaddition,kINPenINDprovidesyouaneasyaccesstogeometricchallengingsurfacessuchasnarrowclefts,capillariesorsubtlestbores.ThekINPenINDbasemodelisargon-powered.Theadmixtureofreducingoroxidizinggasescanbedoneuptothepercentagerange.Furthermore,thedeviceisconvertiblethroughthesimplechangeofitselectrodeheadtooperatewithmoleculargaseslikeairornitrogen.
+
+MoreinformationisprovidedbyneoplascontrolGmbH.">Plasma as a cross-sectional technology in many industry branches, but also in research laboratories, is an indispensable tool in surface treatment. Plasma technology is used everywhere where quality, productivity, environmental sustainability, precision and flexibility is important. Surfaces are cleaned, activated and decontaminated at atmospheric pressure with the handy kINPen® IND. The device is particularly used for surface treatment of temperature-sensitive materials as, for instance, plastics. In addition, kINPen® IND provides you an easy access to geometric challenging surfaces such as narrow clefts, capillaries or subtlest bores. The kINPen® IND base model is argon-powered. The admixture of reducing or oxidizing gases can be done up to the percentage range. Furthermore, the device is convertible through the simple change of its electrode head to operate with molecular gases like air or nitrogen.
+
+More information is provided by neoplas control GmbH.kINPen® IND</a>
+            </li>
+            <li>
+              <a href="#MillerAuto-Axcess450">Miller Auto-Axcess™ 450</a>
+            </li>
+            <li>
+              <a href="#MiniMIP">MiniMIP</a>
+            </li>
+            <li>
+              <a href="#neoplasMixture">neoplas mixture</a>
+            </li>
+            <li>
+              <a href="#Non-thermalatmosphericpressureplasmajet">Non-thermal atmospheric pressure plasma jet</a>
+            </li>
+            <li>
+              <a href="#PlasmaskopJet">Plasmaskop Jet</a>
+            </li>
+            <li>
+              <a href="#Venturi-DBD">Venturi-DBD</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h4>
+            <a href="#objectproperties">Object Properties</a>
+          </h4>
+          <ul class="second">
+            <li>
+              <a href="#hasTopic">has topic</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h4>
+            <a href="#annotationproperties">Annotation Properties</a>
+          </h4>
+          <ul class="second">
+            <li>
+              <a href="#editorialNote">editorial note</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h4>
+            <a href="#namespaces">Namespaces</a>
+          </h4>
+          <ul class="second">
+            <li>
+              <a href="#"></a>
+            </li>
+            <li>
+              <a href="#ns1">ns1</a>
+            </li>
+            <li>
+              <a href="#owl">owl</a>
+            </li>
+            <li>
+              <a href="#qpt">qpt</a>
+            </li>
+            <li>
+              <a href="#rdf">rdf</a>
+            </li>
+            <li>
+              <a href="#rdfs">rdfs</a>
+            </li>
+            <li>
+              <a href="#xsd">xsd</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h4>
+            <a href="#legend">Legend</a>
+          </h4>
+          <ul class="second"></ul>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
