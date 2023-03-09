@@ -8,3 +8,5 @@ ENV/
 env.bak/
 venv.bak/
 data/
+apicache-py3/
+user-config.py
