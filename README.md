@@ -8,14 +8,26 @@ This is the mediawiki to describe the QPTDat ontology and gather community feedb
 ```
 docker-compose up -d
 ```
-3. Set up Mediawiki by going to http://qptdat.plasma-mds.org/wiki and following the wizard.
+3. Set up Mediawiki by going to http://qptdat-wiki.plasma-mds.org and following the wizard.
     * Database must be `ontology_wiki_database_1`
     * Make sure to install SemanticMediaWiki
 4. Put `LocalSetting.php` file in root directory of this project.
-5. Change `$wgServer` variable in `LocalSetting.php` to `$wgServer = "http://qptdat.plasma-mds.org/wiki";`
-6. Uncomment LocalSetting.php
-7. Restart mediawiki
-8. Run interactive bash to update mediawiki
+5. Change `$wgServer` variable in `LocalSetting.php` to `$wgServer = "http://qptdat-wiki.plasma-mds.org/wiki";`
+6. Insert 
+```
+enableSemantics();                                                                                   
+$smwgDefaultStore = 'SMWSparqlStore';
+$smwgSparqlRepositoryConnector = 'virtuoso';
+$smwgSparqlEndpoint["query"] = 'triplestore:8890/sparql/';
+$smwgSparqlEndpoint["update"] = 'triplestore:8890/sparql/';
+$smwgSparqlEndpoint["data"] = '';
+$smwgSparqlDefaultGraph = 'http://qptdat-wiki.plasma-mds.org';
+$smwgDVFeatures = ( $smwgDVFeatures | SMW_DV_MLTV_LCODE  );
+```
+at the end of the `LocalSetting.php` file. 
+7. Uncomment LocalSetting.php
+8. Restart mediawiki
+9. Run interactive bash to update mediawiki
 ```
 docker exec -it ontology_wiki_mediawiki_1 bash
 ```
@@ -32,7 +44,7 @@ python ${pywikibotLocation}/scripts/generate_family_file.py
 3. Follow the configuration wizard.
 
 ### Create a bot account on the new wiki
-1. Create on `http://qptdat.plasma-mds.org/wiki/index.php/Special:BotPasswords` a bot by giving a name and saving the password.
+1. Create on `http://qptdat-wiki.plasma-mds.org/index.php/Special:BotPasswords` a bot by giving a name and saving the password.
 
 ### Add bot configuration
 1. Generate the required pywikibot configuration
@@ -52,6 +64,9 @@ Run the python script on a pattern matching all files that should be documented.
 ./createHTML.py -p "resource/*.ttl"
 ```
 
+# Lokal Test
+Add `127.0.0.1 qptdat-wiki.plasma-mds.org` to `/etc/hosts`.
 
+Note: This does not work in combination with the QPTDat KG infrastrucutre on the same machine since both bind on port 80. For a production setting the exposed MediaWiki port could be changed and set in the DNS entry. 
 
 
